@@ -4,7 +4,7 @@ const Footer = () => {
 
     const d = new Date();
     let year = d.getFullYear();
-    document.getElementById("demo").innerHTML = year;
+    // document.getElementById("demo").innerHTML = year;
     return (
         <div>
             <p id='demo'><small>All rights reserved &copy; </small></p>
