@@ -1,0 +1,12 @@
+.service-detail {
+    border: 1px solid gray;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.service-detail img {
+    border-radius: 8px;
+    width: 450px;
+    text-align: center;
+    padding: 15px;
+}
