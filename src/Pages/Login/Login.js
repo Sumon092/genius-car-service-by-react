@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import SocialLogin from './SocialLogin/SocialLogin';
@@ -24,6 +24,9 @@ const Login = () => {
     if (user) {
         navigate(from, { replace: true });
     }
+    const [sendPasswordResetEmail] = useSendPasswordResetEmail(
+        auth
+    );
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -31,6 +34,11 @@ const Login = () => {
         const password = passwordRef.current.value;
 
         signInWithEmailAndPassword(email, password);
+    }
+
+    const handleResetPassword = async () => {
+        const email = emailRef.current.value;
+        await sendPasswordResetEmail(email)
     }
     const navigateToRegister = event => {
         navigate('/register')
@@ -48,14 +56,13 @@ const Login = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control ref={passwordRef} type="password" placeholder="Password" />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
+                <Button className='w-50 mx-auto d-block mb-3' variant="primary" type="submit">
+                    Log In
                 </Button>
             </Form>
-            <p>New to Ginius Car ? <Link to='/register' onClick={navigateToRegister} >Please Register</Link></p>
+
+            <p>Forgot Password ? <Link to='' className='text-decoration-none' onClick={handleResetPassword} >Reset Password</Link></p>
+            <p>New to Ginius Car ? <Link to='/register' className='text-decoration-none' onClick={navigateToRegister} >Please Register</Link></p>
             <SocialLogin></SocialLogin>
         </div>
     );
